@@ -1,6 +1,5 @@
 package com.bipro.producuctservice.service;
 
-
 import com.bipro.producuctservice.dto.ProductRequest;
 import com.bipro.producuctservice.dto.ProductResponse;
 import com.bipro.producuctservice.model.Product;
@@ -15,9 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
+
     private final ProductRepository productRepository;
 
-    public void createProduct(ProductRequest productRequest){
+    public void createProduct(ProductRequest productRequest) {
         Product product = Product.builder()
                 .name(productRequest.getName())
                 .description(productRequest.getDescription())
@@ -25,7 +25,7 @@ public class ProductService {
                 .build();
 
         productRepository.save(product);
-        log.info("Product{} is saved",product.getId());
+        log.info("Product {} is saved", product.getId());
     }
 
     public List<ProductResponse> getAllProducts() {
@@ -42,5 +42,4 @@ public class ProductService {
                 .price(product.getPrice())
                 .build();
     }
-
 }

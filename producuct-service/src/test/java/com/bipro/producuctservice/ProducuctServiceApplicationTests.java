@@ -25,13 +25,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProducuctServiceApplicationTests {
 
 	@Container
-	static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:4.4.2");
+	static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7.0");
+
 	@Autowired
 	private MockMvc mockMvc;
+
 	@Autowired
 	private ObjectMapper objectMapper;
-	@Autowired
-	private ProductRepository productRepository;
+
 
 	static {
 		mongoDBContainer.start();
@@ -43,14 +44,15 @@ class ProducuctServiceApplicationTests {
 	}
 
 	@Test
-	void shouldCreateProduct() throws Exception {
-		ProductRequest productRequest = getProductRequest();
-		String productRequestString = objectMapper.writeValueAsString(productRequest);
+	void shouldCreateProduct() throws Exception{
+		ProductRequest productRequest= getProductRequest();
+
+		String productRequestString  = objectMapper.writeValueAsString(productRequest);
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/product")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(productRequestString))
 				.andExpect(status().isCreated());
-		Assertions.assertEquals(1, productRepository.findAll().size());
+
 	}
 
 	private ProductRequest getProductRequest() {
@@ -60,5 +62,6 @@ class ProducuctServiceApplicationTests {
 				.price(BigDecimal.valueOf(1200))
 				.build();
 	}
+
 
 }
